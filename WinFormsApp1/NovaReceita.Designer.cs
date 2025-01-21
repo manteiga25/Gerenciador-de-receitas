@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NovaReceita));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -41,6 +42,9 @@
             quantidadeSpinner = new NumericUpDown();
             Inserir = new Button();
             IngredientesMatriz = new DataGridView();
+            Ingrediente = new DataGridViewTextBoxColumn();
+            Quantidade = new DataGridViewTextBoxColumn();
+            Medida = new DataGridViewTextBoxColumn();
             IngredientText = new TextBox();
             label10 = new Label();
             label9 = new Label();
@@ -52,13 +56,13 @@
             DificuldadeBox = new ComboBox();
             CategoriaBox = new ComboBox();
             Duracao = new DateTimePicker();
-            Ingrediente = new DataGridViewTextBoxColumn();
-            Quantidade = new DataGridViewTextBoxColumn();
-            Medida = new DataGridViewTextBoxColumn();
+            Imagem = new PictureBox();
+            button3 = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)quantidadeSpinner).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IngredientesMatriz).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PessoasSpinner).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Imagem).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -82,7 +86,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(32, 149);
+            label3.Location = new Point(24, 218);
             label3.Name = "label3";
             label3.Size = new Size(66, 15);
             label3.TabIndex = 2;
@@ -100,7 +104,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(277, 103);
+            label5.Location = new Point(32, 139);
             label5.Name = "label5";
             label5.Size = new Size(58, 15);
             label5.TabIndex = 4;
@@ -109,7 +113,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(321, 56);
+            label6.Location = new Point(25, 181);
             label6.Name = "label6";
             label6.Size = new Size(65, 15);
             label6.TabIndex = 5;
@@ -143,7 +147,7 @@
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(label9);
             groupBox1.Controls.Add(label2);
-            groupBox1.Location = new Point(32, 229);
+            groupBox1.Location = new Point(25, 299);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(560, 278);
             groupBox1.TabIndex = 8;
@@ -196,6 +200,31 @@
             IngredientesMatriz.TabIndex = 13;
             IngredientesMatriz.CellContentClick += dataGridView1_CellContentClick;
             // 
+            // Ingrediente
+            // 
+            Ingrediente.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Ingrediente.HeaderText = "Ingrediente";
+            Ingrediente.MinimumWidth = 8;
+            Ingrediente.Name = "Ingrediente";
+            Ingrediente.ReadOnly = true;
+            Ingrediente.Width = 250;
+            // 
+            // Quantidade
+            // 
+            Quantidade.HeaderText = "Quantidade";
+            Quantidade.MinimumWidth = 8;
+            Quantidade.Name = "Quantidade";
+            Quantidade.ReadOnly = true;
+            Quantidade.Width = 150;
+            // 
+            // Medida
+            // 
+            Medida.HeaderText = "Medida";
+            Medida.MinimumWidth = 8;
+            Medida.Name = "Medida";
+            Medida.ReadOnly = true;
+            Medida.Width = 150;
+            // 
             // IngredientText
             // 
             IngredientText.Location = new Point(91, 26);
@@ -224,7 +253,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(512, 520);
+            button1.Location = new Point(504, 583);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 9;
@@ -234,7 +263,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(423, 520);
+            button2.Location = new Point(423, 583);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 10;
@@ -251,15 +280,15 @@
             // 
             // PreparacaoText
             // 
-            PreparacaoText.Location = new Point(104, 149);
+            PreparacaoText.Location = new Point(96, 218);
             PreparacaoText.Name = "PreparacaoText";
-            PreparacaoText.Size = new Size(488, 75);
+            PreparacaoText.Size = new Size(483, 75);
             PreparacaoText.TabIndex = 12;
             PreparacaoText.Text = "";
             // 
             // PessoasSpinner
             // 
-            PessoasSpinner.Location = new Point(392, 54);
+            PessoasSpinner.Location = new Point(104, 179);
             PessoasSpinner.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             PessoasSpinner.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             PessoasSpinner.Name = "PessoasSpinner";
@@ -283,7 +312,7 @@
             CategoriaBox.DropDownStyle = ComboBoxStyle.DropDownList;
             CategoriaBox.FormattingEnabled = true;
             CategoriaBox.Items.AddRange(new object[] { "Entradas", "Sopa", "Carne", "Peixe", "Marísco", "Molhos e Temperos", "Saladas", "Pastelaria", "Sobremesas" });
-            CategoriaBox.Location = new Point(341, 100);
+            CategoriaBox.Location = new Point(104, 139);
             CategoriaBox.Name = "CategoriaBox";
             CategoriaBox.Size = new Size(164, 23);
             CategoriaBox.TabIndex = 15;
@@ -294,40 +323,38 @@
             Duracao.Format = DateTimePickerFormat.Custom;
             Duracao.Location = new Point(155, 54);
             Duracao.Name = "Duracao";
+            Duracao.ShowUpDown = true;
             Duracao.Size = new Size(79, 23);
             Duracao.TabIndex = 16;
             Duracao.Value = new DateTime(2025, 1, 17, 0, 0, 0, 0);
             // 
-            // Ingrediente
+            // Imagem
             // 
-            Ingrediente.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            Ingrediente.HeaderText = "Ingrediente";
-            Ingrediente.MinimumWidth = 8;
-            Ingrediente.Name = "Ingrediente";
-            Ingrediente.ReadOnly = true;
-            Ingrediente.Width = 250;
+            Imagem.Image = (Image)resources.GetObject("Imagem.Image");
+            Imagem.InitialImage = (Image)resources.GetObject("Imagem.InitialImage");
+            Imagem.Location = new Point(363, 42);
+            Imagem.Name = "Imagem";
+            Imagem.Size = new Size(216, 160);
+            Imagem.TabIndex = 17;
+            Imagem.TabStop = false;
             // 
-            // Quantidade
+            // button3
             // 
-            Quantidade.HeaderText = "Quantidade";
-            Quantidade.MinimumWidth = 8;
-            Quantidade.Name = "Quantidade";
-            Quantidade.ReadOnly = true;
-            Quantidade.Width = 150;
-            // 
-            // Medida
-            // 
-            Medida.HeaderText = "Medida";
-            Medida.MinimumWidth = 8;
-            Medida.Name = "Medida";
-            Medida.ReadOnly = true;
-            Medida.Width = 150;
+            button3.Location = new Point(363, 18);
+            button3.Name = "button3";
+            button3.Size = new Size(85, 23);
+            button3.TabIndex = 18;
+            button3.Text = "Select Image";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // NovaReceita
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(621, 555);
+            ClientSize = new Size(634, 655);
+            Controls.Add(button3);
+            Controls.Add(Imagem);
             Controls.Add(Duracao);
             Controls.Add(CategoriaBox);
             Controls.Add(DificuldadeBox);
@@ -352,6 +379,7 @@
             ((System.ComponentModel.ISupportInitialize)quantidadeSpinner).EndInit();
             ((System.ComponentModel.ISupportInitialize)IngredientesMatriz).EndInit();
             ((System.ComponentModel.ISupportInitialize)PessoasSpinner).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Imagem).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -385,5 +413,7 @@
         private DataGridViewTextBoxColumn Ingrediente;
         private DataGridViewTextBoxColumn Quantidade;
         private DataGridViewTextBoxColumn Medida;
+        private PictureBox Imagem;
+        private Button button3;
     }
 }

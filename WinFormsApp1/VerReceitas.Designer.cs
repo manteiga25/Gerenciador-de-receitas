@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VerReceitas));
             groupBox1 = new GroupBox();
             button2 = new Button();
             button1 = new Button();
@@ -50,8 +51,10 @@
             Ingrediente = new DataGridViewTextBoxColumn();
             Quantidade = new DataGridViewTextBoxColumn();
             Medida = new DataGridViewTextBoxColumn();
+            Imagem = new PictureBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)IngredientesList).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Imagem).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
@@ -129,7 +132,7 @@
             ReceitasView.Location = new Point(19, 150);
             ReceitasView.MultiSelect = false;
             ReceitasView.Name = "ReceitasView";
-            ReceitasView.Size = new Size(291, 288);
+            ReceitasView.Size = new Size(291, 334);
             ReceitasView.TabIndex = 1;
             ReceitasView.UseCompatibleStateImageBehavior = false;
             ReceitasView.SelectedIndexChanged += ReceitasView_SelectedIndexChanged;
@@ -137,7 +140,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(342, 119);
+            label3.Location = new Point(333, 176);
             label3.Name = "label3";
             label3.Size = new Size(72, 15);
             label3.TabIndex = 6;
@@ -146,7 +149,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(628, 87);
+            label4.Location = new Point(342, 59);
             label4.Name = "label4";
             label4.Size = new Size(58, 15);
             label4.TabIndex = 7;
@@ -155,7 +158,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(380, 87);
+            label5.Location = new Point(333, 94);
             label5.Name = "label5";
             label5.Size = new Size(67, 15);
             label5.TabIndex = 8;
@@ -164,7 +167,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(628, 45);
+            label6.Location = new Point(335, 129);
             label6.Name = "label6";
             label6.Size = new Size(65, 15);
             label6.TabIndex = 9;
@@ -173,7 +176,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(539, 44);
+            label7.Location = new Point(548, 32);
             label7.Name = "label7";
             label7.Size = new Size(38, 15);
             label7.TabIndex = 10;
@@ -182,7 +185,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(342, 42);
+            label8.Location = new Point(342, 31);
             label8.Name = "label8";
             label8.Size = new Size(105, 15);
             label8.TabIndex = 11;
@@ -191,15 +194,15 @@
             // cat
             // 
             cat.BorderStyle = BorderStyle.FixedSingle;
-            cat.Location = new Point(699, 83);
+            cat.Location = new Point(406, 58);
             cat.Name = "cat";
-            cat.Size = new Size(105, 24);
+            cat.Size = new Size(124, 23);
             cat.TabIndex = 12;
             // 
             // dif
             // 
             dif.BorderStyle = BorderStyle.FixedSingle;
-            dif.Location = new Point(453, 84);
+            dif.Location = new Point(406, 93);
             dif.Name = "dif";
             dif.Size = new Size(124, 23);
             dif.TabIndex = 13;
@@ -207,7 +210,7 @@
             // PessoasWid
             // 
             PessoasWid.BorderStyle = BorderStyle.FixedSingle;
-            PessoasWid.Location = new Point(699, 45);
+            PessoasWid.Location = new Point(406, 128);
             PessoasWid.Name = "PessoasWid";
             PessoasWid.Size = new Size(30, 20);
             PessoasWid.TabIndex = 14;
@@ -215,7 +218,7 @@
             // Prep
             // 
             Prep.BorderStyle = BorderStyle.FixedSingle;
-            Prep.Location = new Point(453, 41);
+            Prep.Location = new Point(462, 31);
             Prep.Name = "Prep";
             Prep.Size = new Size(80, 20);
             Prep.TabIndex = 15;
@@ -225,7 +228,7 @@
             IngredientesList.AllowUserToAddRows = false;
             IngredientesList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             IngredientesList.Columns.AddRange(new DataGridViewColumn[] { Ingrediente, Quantidade, Medida });
-            IngredientesList.Location = new Point(342, 150);
+            IngredientesList.Location = new Point(331, 196);
             IngredientesList.Margin = new Padding(2);
             IngredientesList.MultiSelect = false;
             IngredientesList.Name = "IngredientesList";
@@ -260,11 +263,22 @@
             Medida.Resizable = DataGridViewTriState.True;
             Medida.Width = 150;
             // 
+            // Imagem
+            // 
+            Imagem.Image = (Image)resources.GetObject("Imagem.Image");
+            Imagem.InitialImage = (Image)resources.GetObject("Imagem.InitialImage");
+            Imagem.Location = new Point(618, 31);
+            Imagem.Name = "Imagem";
+            Imagem.Size = new Size(216, 160);
+            Imagem.TabIndex = 17;
+            Imagem.TabStop = false;
+            // 
             // VerReceitas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(869, 450);
+            ClientSize = new Size(869, 501);
+            Controls.Add(Imagem);
             Controls.Add(IngredientesList);
             Controls.Add(Prep);
             Controls.Add(PessoasWid);
@@ -284,6 +298,7 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)IngredientesList).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Imagem).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -312,5 +327,6 @@
         private DataGridViewTextBoxColumn Ingrediente;
         private DataGridViewTextBoxColumn Quantidade;
         private DataGridViewTextBoxColumn Medida;
+        private PictureBox Imagem;
     }
 }

@@ -54,9 +54,16 @@
             PreparacaoText = new RichTextBox();
             ReceitasView = new ListView();
             label9 = new Label();
+            fileSystemWatcher1 = new FileSystemWatcher();
+            Imagem = new PictureBox();
+            groupBox1 = new GroupBox();
+            ImagemBotao = new Button();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)IngredientesList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PessoasSpinner).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Imagem).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
@@ -65,7 +72,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { edit, cancelar, save, remove });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(820, 25);
+            toolStrip1.Size = new Size(911, 25);
             toolStrip1.TabIndex = 0;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -116,7 +123,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(15, 31);
+            label1.Location = new Point(20, 50);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new Size(40, 15);
@@ -126,7 +133,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(15, 93);
+            label2.Location = new Point(16, 144);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new Size(67, 15);
@@ -136,7 +143,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(221, 63);
+            label3.Location = new Point(15, 108);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new Size(65, 15);
@@ -146,7 +153,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(170, 63);
+            label4.Location = new Point(174, 82);
             label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
             label4.Size = new Size(38, 15);
@@ -156,7 +163,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(15, 60);
+            label5.Location = new Point(16, 82);
             label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
             label5.Size = new Size(66, 15);
@@ -166,7 +173,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(256, 97);
+            label6.Location = new Point(20, 179);
             label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
             label6.Size = new Size(58, 15);
@@ -185,7 +192,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(15, 120);
+            label8.Location = new Point(10, 197);
             label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
             label8.Size = new Size(58, 15);
@@ -197,7 +204,7 @@
             IngredientesList.AllowUserToAddRows = false;
             IngredientesList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             IngredientesList.Columns.AddRange(new DataGridViewColumn[] { Ingrediente, Quantidade, Medida });
-            IngredientesList.Location = new Point(15, 211);
+            IngredientesList.Location = new Point(10, 296);
             IngredientesList.Margin = new Padding(2);
             IngredientesList.MultiSelect = false;
             IngredientesList.Name = "IngredientesList";
@@ -234,10 +241,10 @@
             // nomeText
             // 
             nomeText.Enabled = false;
-            nomeText.Location = new Point(60, 31);
+            nomeText.Location = new Point(71, 50);
             nomeText.Margin = new Padding(2);
             nomeText.Name = "nomeText";
-            nomeText.Size = new Size(259, 23);
+            nomeText.Size = new Size(181, 23);
             nomeText.TabIndex = 10;
             // 
             // Duracao
@@ -245,8 +252,9 @@
             Duracao.CustomFormat = "HH:mm:ss";
             Duracao.Enabled = false;
             Duracao.Format = DateTimePickerFormat.Custom;
-            Duracao.Location = new Point(90, 60);
+            Duracao.Location = new Point(90, 76);
             Duracao.Name = "Duracao";
+            Duracao.ShowUpDown = true;
             Duracao.Size = new Size(79, 23);
             Duracao.TabIndex = 17;
             Duracao.Value = new DateTime(2025, 1, 17, 0, 0, 0, 0);
@@ -254,7 +262,7 @@
             // PessoasSpinner
             // 
             PessoasSpinner.Enabled = false;
-            PessoasSpinner.Location = new Point(298, 62);
+            PessoasSpinner.Location = new Point(90, 105);
             PessoasSpinner.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             PessoasSpinner.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             PessoasSpinner.Name = "PessoasSpinner";
@@ -269,7 +277,7 @@
             DificuldadeBox.Enabled = false;
             DificuldadeBox.FormattingEnabled = true;
             DificuldadeBox.Items.AddRange(new object[] { "Muito Fácil", "Fácil", "Moderado", "Difícil", "Muito Difícil" });
-            DificuldadeBox.Location = new Point(90, 93);
+            DificuldadeBox.Location = new Point(88, 141);
             DificuldadeBox.Name = "DificuldadeBox";
             DificuldadeBox.Size = new Size(151, 23);
             DificuldadeBox.TabIndex = 19;
@@ -280,7 +288,7 @@
             CategoriaBox.Enabled = false;
             CategoriaBox.FormattingEnabled = true;
             CategoriaBox.Items.AddRange(new object[] { "Entradas", "Sopa", "Carne", "Peixe", "Marísco", "Molhos e Temperos", "Saladas", "Pastelaria", "Sobremesas" });
-            CategoriaBox.Location = new Point(323, 94);
+            CategoriaBox.Location = new Point(88, 179);
             CategoriaBox.Name = "CategoriaBox";
             CategoriaBox.Size = new Size(164, 23);
             CategoriaBox.TabIndex = 20;
@@ -288,7 +296,7 @@
             // PreparacaoText
             // 
             PreparacaoText.Enabled = false;
-            PreparacaoText.Location = new Point(81, 120);
+            PreparacaoText.Location = new Point(76, 197);
             PreparacaoText.Name = "PreparacaoText";
             PreparacaoText.Size = new Size(402, 75);
             PreparacaoText.TabIndex = 21;
@@ -296,11 +304,11 @@
             // 
             // ReceitasView
             // 
-            ReceitasView.Location = new Point(521, 50);
+            ReceitasView.Location = new Point(614, 50);
             ReceitasView.Margin = new Padding(2);
             ReceitasView.MultiSelect = false;
             ReceitasView.Name = "ReceitasView";
-            ReceitasView.Size = new Size(262, 297);
+            ReceitasView.Size = new Size(262, 454);
             ReceitasView.TabIndex = 22;
             ReceitasView.UseCompatibleStateImageBehavior = false;
             ReceitasView.View = View.List;
@@ -309,28 +317,64 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(522, 31);
+            label9.Location = new Point(614, 28);
             label9.Margin = new Padding(2, 0, 2, 0);
             label9.Name = "label9";
             label9.Size = new Size(50, 15);
             label9.TabIndex = 23;
             label9.Text = "Receitas";
             // 
+            // fileSystemWatcher1
+            // 
+            fileSystemWatcher1.EnableRaisingEvents = true;
+            fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // Imagem
+            // 
+            Imagem.Image = (Image)resources.GetObject("Imagem.Image");
+            Imagem.Location = new Point(331, 22);
+            Imagem.Name = "Imagem";
+            Imagem.Size = new Size(216, 160);
+            Imagem.TabIndex = 24;
+            Imagem.TabStop = false;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(ImagemBotao);
+            groupBox1.Controls.Add(Imagem);
+            groupBox1.Controls.Add(label8);
+            groupBox1.Controls.Add(PreparacaoText);
+            groupBox1.Controls.Add(IngredientesList);
+            groupBox1.Location = new Point(12, 28);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(568, 476);
+            groupBox1.TabIndex = 25;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Receita";
+            // 
+            // ImagemBotao
+            // 
+            ImagemBotao.Enabled = false;
+            ImagemBotao.Location = new Point(245, 22);
+            ImagemBotao.Name = "ImagemBotao";
+            ImagemBotao.Size = new Size(85, 23);
+            ImagemBotao.TabIndex = 25;
+            ImagemBotao.Text = "Select Image";
+            ImagemBotao.UseVisualStyleBackColor = true;
+            ImagemBotao.Click += button3_Click;
+            // 
             // GerirReceitas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(820, 421);
+            ClientSize = new Size(911, 515);
             Controls.Add(label9);
             Controls.Add(ReceitasView);
-            Controls.Add(PreparacaoText);
             Controls.Add(CategoriaBox);
             Controls.Add(DificuldadeBox);
             Controls.Add(PessoasSpinner);
             Controls.Add(Duracao);
             Controls.Add(nomeText);
-            Controls.Add(IngredientesList);
-            Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -339,6 +383,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(toolStrip1);
+            Controls.Add(groupBox1);
             Margin = new Padding(2);
             Name = "GerirReceitas";
             Text = "GerirReceitas";
@@ -346,6 +391,10 @@
             toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)IngredientesList).EndInit();
             ((System.ComponentModel.ISupportInitialize)PessoasSpinner).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Imagem).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -377,5 +426,9 @@
         private DataGridViewTextBoxColumn Ingrediente;
         private DataGridViewTextBoxColumn Quantidade;
         private DataGridViewComboBoxColumn Medida;
+        private FileSystemWatcher fileSystemWatcher1;
+        private GroupBox groupBox1;
+        private PictureBox Imagem;
+        private Button ImagemBotao;
     }
 }

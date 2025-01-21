@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -77,7 +78,8 @@ namespace WinFormsApp1
             DificuldadeBox.Text = receita.dificuldadte;
             CategoriaBox.Text = receita.categoria;
             PreparacaoText.Text = receita.descricao;
-            Duracao.Value = receita.preparacao;
+            Duracao.Value = DateTime.Parse(receita.preparacao);
+            Imagem.Image = receita.getImage();
 
             for (int ingrediente = 0; ingrediente < receita.ingredientes.Count; ingrediente++)
             {
@@ -108,7 +110,8 @@ namespace WinFormsApp1
             receita.dificuldadte = DificuldadeBox.Text;
             receita.categoria = CategoriaBox.Text;
             receita.descricao = PreparacaoText.Text;
-            receita.preparacao = Duracao.Value;
+            receita.preparacao = Duracao.Value.ToString("HH:mm:ss");
+            receita.BitmapToBase64(new Bitmap(Imagem.Image));
 
             List<string> ingredientesNome = new List<string>();
             List<byte> IngredientesQuantidade = new List<byte>();
@@ -116,7 +119,6 @@ namespace WinFormsApp1
 
             for (byte ingredient = 0; ingredient < IngredientesList.Rows.Count; ingredient++)
             {
-                Console.WriteLine(ingredient);
                 DataGridViewRow row = IngredientesList.Rows[ingredient];
                 ingredientesNome.Add(row.Cells[0].Value.ToString());
                 IngredientesQuantidade.Add(Convert.ToByte(row.Cells[1].Value));
@@ -143,9 +145,10 @@ namespace WinFormsApp1
                     ReceitasView.SelectedItems[0].Selected = false;
                     resetMenu();
                 }
-            } else
+            }
+            else
             {
-                MessageBox.Show("Preencha todos os campos", "SSem campos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Preencha todos os campos", "Sem campos", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -159,6 +162,7 @@ namespace WinFormsApp1
             CategoriaBox.Enabled = state;
             PreparacaoText.Enabled = state;
             Duracao.Enabled = state;
+            ImagemBotao.Enabled = state;
         }
 
         private void resetAll()
@@ -168,7 +172,7 @@ namespace WinFormsApp1
             DificuldadeBox.SelectedIndex = -1;
             CategoriaBox.SelectedIndex = -1;
             PreparacaoText.Text = "";
-            Duracao.Value = DateTime.Parse("00:00:00");
+            Duracao.Value = DateTime.MinValue;
             IngredientesList.Rows.Clear();
         }
 
@@ -194,48 +198,12 @@ namespace WinFormsApp1
         {
             try
             {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load("Receitas.xml");
-
-                XmlNode receitaNo = xmlDoc.SelectSingleNode("//Receita");
-
-               // XmlNode n = receitaNo.SelectSingleNode("//Nome");
-
-                foreach (XmlNode receitaE in xmlDoc.SelectNodes("//Receita"))
-                {
-                    XmlNode node = receitaE.SelectSingleNode("Nome");
-                    if (node.InnerText == nomeAntigo)
-                    {
-                        node.InnerText = receita.nome;
-                        receitaE.SelectSingleNode("Categoria").InnerText = receita.categoria;
-                        receitaE.SelectSingleNode("Dificuldade").InnerText = receita.dificuldadte;
-                        receitaE.SelectSingleNode("Descricao").InnerText = receita.descricao;
-                        receitaE.SelectSingleNode("Preparacao").InnerText = receita.preparacao.ToString();
-                        receitaE.SelectSingleNode("Pessoas").InnerText = receita.numeroPessoas.ToString();
-
-                        XmlNode ingredientesNode = receitaE.SelectSingleNode("Ingredientes");
-
-                        if (ingredientesNode != null)
-                        {
-                            // Iterar sobre cada ingrediente
-                            int pos = 0;
-                            foreach (XmlNode ingrediente in ingredientesNode.SelectNodes("Ingrediente"))
-                            {
-                                ingrediente.SelectSingleNode("Nome").InnerText = receita.ingredientes[pos];
-                                ingrediente.SelectSingleNode("Quantidade").InnerText = receita.quantidade[pos].ToString();
-                                ingrediente.SelectSingleNode("Medida").InnerText = receita.medida[pos];
-                                pos++;
-                            }
-                        }
-                        break;
-                    }
-                }
-                xmlDoc.Save("Receitas.xml");
-                MessageBox.Show("XML Success", "Dados salvos com sucesso.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DataXML.modifyNode(receita, nomeAntigo);
+                MessageBox.Show("Dados salvos com sucesso.", "XML Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
             {
-                MessageBox.Show("XML Error", "Erro ao salvar alterações.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao salvar alterações.", "XML Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;
@@ -245,20 +213,7 @@ namespace WinFormsApp1
         {
             try
             {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load("Receitas.xml");
-
-                foreach (XmlNode receitaE in xmlDoc.SelectNodes("//Receita"))
-                {
-                    XmlNode node = receitaE.SelectSingleNode("Nome");
-                    if (node.InnerText.Trim() == nomeAntigo.Trim())
-                    {
-                        receitaE.ParentNode.RemoveChild(receitaE);
-                        break;
-                    }
-                }
-
-                 xmlDoc.Save("Receitas.xml");
+                DataXML.removeNode(nomeAntigo);
             }
             catch (Exception e)
             {
@@ -274,12 +229,42 @@ namespace WinFormsApp1
             nomeAntigo = ReceitasList[ReceitaAtual].nome;
             if (!removeXML())
             {
-                MessageBox.Show("XML Error", "Erro ao salvar alterações.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } else
+                MessageBox.Show("Erro ao salvar alterações.", "XML Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
             {
                 ReceitasList.Remove(ReceitasList[ReceitaAtual]);
                 ReceitasView.Items.RemoveAt(ReceitaAtual);
-                MessageBox.Show("XML Success", "Dados salvos com sucesso.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Dados salvos com sucesso.", "XML Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Arquivo jpg (*.jpg)|*.jpg | Arquivo png (*.png)|*.png";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string caminhoCompleto = openFileDialog.FileName;
+                    MemoryStream stream = new MemoryStream();
+                    Image image = Image.FromFile(caminhoCompleto);
+
+                    Bitmap bitmap = new Bitmap(image, 216, 160);
+
+                    bitmap.Save(stream, ImageFormat.Bmp);
+
+                    image.Dispose();
+                    bitmap.Dispose();
+
+                    Imagem.Image = new Bitmap(stream);
+
+                }
+                catch
+                {
+                    MessageBox.Show("Erro ao carregar imagem.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

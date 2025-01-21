@@ -47,17 +47,30 @@ namespace WinFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            search = true;
-            ReceitasView.Items.Clear();
-            receitaSearch = SearchXml(CampoWid.Text, ValorWid.Text);
-            if (receitaSearch == null)
+
+            string campo = CampoWid.Text;
+            string valor = CampoWid.Text;
+
+            if (campo == null || valor == null)
             {
-                MessageBox.Show("Erro ao encontrar informações da receita.", "Erro de leitura", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } else
+                MessageBox.Show("Voce precisa preencher os campos para realizar a busca.", "Erro de campo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
             {
-                foreach (Receitas r in receitaSearch)
+
+                search = true;
+                ReceitasView.Items.Clear();
+                receitaSearch = DataXML.SearchXml(campo, valor);
+                if (receitaSearch == null)
                 {
-                    ReceitasView.Items.Add(r.nome);
+                    MessageBox.Show("Erro ao encontrar informações da receita.", "Erro de leitura", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    foreach (Receitas r in receitaSearch)
+                    {
+                        ReceitasView.Items.Add(r.nome);
+                    }
                 }
             }
         }
@@ -83,6 +96,7 @@ namespace WinFormsApp1
                 cat.Text = receita.categoria;
                 dif.Text = receita.dificuldadte;
                 PessoasWid.Text = receita.numeroPessoas.ToString();
+                Imagem.Image = receita.getBitmap();
                 for (byte ingrediente = 0; ingrediente < receita.ingredientes.Count; ingrediente++)
                 {
                     IngredientesList.Rows.Add(receita.ingredientes[ingrediente], receita.quantidade[ingrediente].ToString(), receita.medida[ingrediente]);
@@ -109,83 +123,5 @@ namespace WinFormsApp1
                 ReceitasView.Items.Add(receita.nome);
             }
         }
-
-     /*   private Receitas SearchXml0(string campo, string valor)
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("Receitas.xml");
-
-            XmlNode receitaNo = xmlDoc.SelectSingleNode("//Receita");
-
-            // XmlNode n = receitaNo.SelectSingleNode("//Nome");
-
-            foreach (XmlNode receitaE in xmlDoc.SelectNodes("//Receita"))
-            {
-                XmlNode node = receitaE.SelectSingleNode(campo);
-                if (node.InnerText == valor)
-                {
-                    Receitas receita = new Receitas();
-                    receita.nome = receitaE.SelectSingleNode("Nome").InnerText;
-                    receita.categoria = receitaE.SelectSingleNode("Categoria").InnerText;
-                    receita.dificuldadte = receitaE.SelectSingleNode("Dificuldade").InnerText;
-                    receita.descricao = receitaE.SelectSingleNode("Descricao").InnerText;
-                    receita.preparacao = DateTime.Parse(receitaE.SelectSingleNode("Preparacao").InnerText);
-                    receita.numeroPessoas =  Byte.Parse(receitaE.SelectSingleNode("Pessoas").InnerText);
-
-                    XmlNodeList IngredientesNode = receitaE.SelectNodes("Ingredientes/Ingrediente");
-
-                    for (byte ingrediente = 0; ingrediente < receita.ingredientes.Count; ingrediente++)
-                    {
-                        XmlNode ingredienteNode = IngredientesNode[ingrediente];
-                        receita.ingredientes.Add(ingredienteNode["Nome"].InnerText);
-                        receita.quantidade.Add(byte.Parse(ingredienteNode["Quantidade"].InnerText));
-                        receita.medida.Add(ingredienteNode["Medida"].InnerText);
-                    }
-                    return receita;
-                }
-            }
-            return null;
-        } */
-
-        private List<Receitas> SearchXml(string campo, string valor)
-        {
-
-            List<Receitas> SearchReceitas = new List<Receitas>();
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("Receitas.xml");
-
-            XmlNode receitaNo = xmlDoc.SelectSingleNode("//Receita");
-
-            // XmlNode n = receitaNo.SelectSingleNode("//Nome");
-
-            foreach (XmlNode receitaE in xmlDoc.SelectNodes("//Receita"))
-            {
-                XmlNode node = receitaE.SelectSingleNode(campo);
-                if (node.InnerText == valor)
-                {
-                    Receitas receita = new Receitas();
-                    receita.nome = receitaE.SelectSingleNode("Nome").InnerText;
-                    receita.categoria = receitaE.SelectSingleNode("Categoria").InnerText;
-                    receita.dificuldadte = receitaE.SelectSingleNode("Dificuldade").InnerText;
-                    receita.descricao = receitaE.SelectSingleNode("Descricao").InnerText;
-                    receita.preparacao = DateTime.Parse(receitaE.SelectSingleNode("Preparacao").InnerText);
-                    receita.numeroPessoas = Byte.Parse(receitaE.SelectSingleNode("Pessoas").InnerText);
-
-                    XmlNodeList IngredientesNode = receitaE.SelectNodes("Ingredientes/Ingrediente");
-
-                    for (byte ingrediente = 0; ingrediente < receita.ingredientes.Count; ingrediente++)
-                    {
-                        XmlNode ingredienteNode = IngredientesNode[ingrediente];
-                        receita.ingredientes.Add(ingredienteNode["Nome"].InnerText);
-                        receita.quantidade.Add(byte.Parse(ingredienteNode["Quantidade"].InnerText));
-                        receita.medida.Add(ingredienteNode["Medida"].InnerText);
-                    }
-                    SearchReceitas.Add( receita);
-                }
-            }
-            return SearchReceitas.Count == 0 ? null : SearchReceitas;
-        }
-
     }
 }

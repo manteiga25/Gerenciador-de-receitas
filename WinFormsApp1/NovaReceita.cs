@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Security.Permissions;
 using System.Text;
@@ -14,6 +15,8 @@ namespace WinFormsApp1
 {
     public partial class NovaReceita : Form
     {
+
+        private Image imagemPadrao;
 
         private List<Receitas> ReceitasList = null;
 
@@ -36,15 +39,17 @@ namespace WinFormsApp1
         private void Inserir_Clicked(object sender, EventArgs e)
         {
             string ingrediente = IngredientText.Text;
-            byte quantidade = (byte) quantidadeSpinner.Value;
+            byte quantidade = (byte)quantidadeSpinner.Value;
             string medida = MedidaBox.Text;
 
-            if (ingrediente != "" && quantidade != 0 && medida != "") {
+            if (ingrediente != "" && quantidade != 0 && medida != "")
+            {
                 IngredientesMatriz.Rows.Add(ingrediente, quantidade, medida);
                 freeIngredientes();
-            } else
+            }
+            else
             {
-                MessageBox.Show("Voce precida preencher todos os campos.");
+                MessageBox.Show("Voce precida preencher todos os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -58,6 +63,7 @@ namespace WinFormsApp1
 
         private void NovaReceita_Load(object sender, EventArgs e)
         {
+            imagemPadrao = Imagem.Image;
         }
 
         private void close(object sender, EventArgs e)
@@ -71,9 +77,11 @@ namespace WinFormsApp1
             DificuldadeBox.SelectedIndex = -1;
             PreparacaoText.Text = "";
             DificuldadeBox.SelectedIndex = -1;
-            CategoriaBox.Text = "";
+            CategoriaBox.SelectedIndex = -1;
             PessoasSpinner.Value = 1;
             IngredientesMatriz.Rows.Clear();
+            Duracao.Value = DateTimePicker.MinimumDateTime;
+            Imagem.Image = imagemPadrao;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -82,9 +90,9 @@ namespace WinFormsApp1
             string dificuldade = DificuldadeBox.Text;
             string descricao = PreparacaoText.Text;
             string categoria = CategoriaBox.Text;
-            byte numeroPessoas = (byte) PessoasSpinner.Value;
-            DateTime preparacao = Duracao.Value;
-            byte numeroIngredientes = (byte) IngredientesMatriz.Rows.Count;
+            byte numeroPessoas = (byte)PessoasSpinner.Value;
+            string preparacao = Duracao.Value.ToString("HH:mm:ss");
+            byte numeroIngredientes = (byte)IngredientesMatriz.Rows.Count;
 
             string[] ingredientesNome = new string[numeroIngredientes];
             byte[] ingredientesQuantidade = new byte[numeroIngredientes];
@@ -94,84 +102,73 @@ namespace WinFormsApp1
             {
                 DataGridViewRow row = IngredientesMatriz.Rows[ingredient];
                 ingredientesNome[ingredient] = row.Cells[0].Value.ToString();
-                ingredientesQuantidade[ingredient] = (byte) row.Cells[1].Value;
+                ingredientesQuantidade[ingredient] = (byte)row.Cells[1].Value;
                 ingredientesMedidas[ingredient] = row.Cells[2].Value.ToString();
             }
 
-            if (nome != "" && dificuldade != "" && descricao != "" && categoria != "" && numeroPessoas != 0 && !preparacao.Equals("00:00:00") && numeroIngredientes != 0)
+            try
             {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load("Receitas.xml");
 
-                XmlElement root = xmlDoc.DocumentElement;
-
-                XmlElement child = xmlDoc.CreateElement("Receita");
-
-                XmlElement nomeAttr = xmlDoc.CreateElement("Nome");
-                nomeAttr.InnerText = nome;
-                XmlElement categoriaAttr = xmlDoc.CreateElement("Categoria");
-                categoriaAttr.InnerText = categoria;
-                XmlElement dificuldadeAttr = xmlDoc.CreateElement("Dificuldade");
-                dificuldadeAttr.InnerText = dificuldade;
-                XmlElement descricaoAttr = xmlDoc.CreateElement("Descricao");
-                descricaoAttr.InnerText = descricao;
-                XmlElement preparacaoAttr = xmlDoc.CreateElement("Preparacao");
-                preparacaoAttr.InnerText = preparacao.ToString();
-                XmlElement pessoasAttr = xmlDoc.CreateElement("Pessoas");
-                pessoasAttr.InnerText = numeroPessoas.ToString();
-
-                XmlElement IngredientesRoot = xmlDoc.CreateElement("Ingredientes");
-
-                for (byte ingrediente = 0; ingrediente < numeroIngredientes; ingrediente++)
+                if (nome != "" && dificuldade != "" && descricao != "" && categoria != "" && numeroPessoas != 0 && !preparacao.Equals("00:00:00") && numeroIngredientes != 0 && !Imagem.Image.Equals(imagemPadrao))
                 {
-                    XmlElement ingredienteChild = xmlDoc.CreateElement("Ingrediente");
-                    XmlElement nomeIngredienteAttr = xmlDoc.CreateElement("Nome");
-                    nomeIngredienteAttr.InnerText = ingredientesNome[ingrediente];
-                    XmlElement QuantidadeIngredienteAttr = xmlDoc.CreateElement("Quantidade");
-                    QuantidadeIngredienteAttr.InnerText = ingredientesQuantidade[ingrediente].ToString();
-                    XmlElement MedidaIngredienteAttr = xmlDoc.CreateElement("Medida");
-                    MedidaIngredienteAttr.InnerText = ingredientesMedidas[ingrediente];
 
-                    ingredienteChild.AppendChild(nomeIngredienteAttr);
-                    ingredienteChild.AppendChild(QuantidadeIngredienteAttr);
-                    ingredienteChild.AppendChild(MedidaIngredienteAttr);
+                    Receitas receita = new Receitas();
+                    receita.nome = nome;
+                    receita.categoria = categoria;
+                    receita.descricao = descricao;
+                    receita.dificuldadte = dificuldade;
+                    receita.numeroPessoas = numeroPessoas;
+                    receita.preparacao = preparacao;
+                    receita.BitmapToBase64(new Bitmap(Imagem.Image));
+                    receita.ingredientes = ingredientesNome.ToList<string>();
+                    receita.quantidade = ingredientesQuantidade.ToList<byte>();
+                    receita.medida = ingredientesMedidas.ToList<string>();
 
-                    IngredientesRoot.AppendChild(ingredienteChild);
+                    DataXML.writeXml(receita);
+
+                    ReceitasList.Add(receita);
+
+                    freeAll();
+                }
+                else
+                {
+                    MessageBox.Show("Voce precida preencher todos os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao salvar receita\n." + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Arquivo jpg (*.jpg)|*.jpg | Arquivo png (*.png)|*.png";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string caminhoCompleto = openFileDialog.FileName;
+                    MemoryStream stream = new MemoryStream();
+                    Image image = Image.FromFile(caminhoCompleto);
+
+                    Bitmap bitmap = new Bitmap(image, 216, 160);
+
+                    bitmap.Save(stream, ImageFormat.Bmp);
+
+                    image.Dispose();
+                    bitmap.Dispose();
+
+                    Imagem.Image = new Bitmap(stream);
 
                 }
-
-                child.AppendChild(nomeAttr);
-                child.AppendChild(categoriaAttr);
-                child.AppendChild(dificuldadeAttr);
-                child.AppendChild(descricaoAttr);
-                child.AppendChild(preparacaoAttr);
-                child.AppendChild(pessoasAttr);
-                child.AppendChild(IngredientesRoot);
-
-                root.AppendChild(child);
-
-                xmlDoc.Save("Receitas.xml");
-
-                freeAll();
-
-                Receitas receita = new Receitas();
-                receita.nome = nome;
-                receita.categoria = categoria;
-                receita.descricao = descricao;
-                receita.dificuldadte = dificuldade;
-                receita.numeroPessoas = numeroPessoas;
-                receita.preparacao = preparacao;
-                receita.ingredientes = ingredientesNome.ToList<string>();
-                receita.quantidade = ingredientesQuantidade.ToList<byte>();
-                receita.medida = ingredientesMedidas.ToList<string>();
-
-                ReceitasList.Add(receita);
-
-            } else
-            {
-                MessageBox.Show("Voce precida preencher todos os campos.");
-            }
-
+                catch
+                {
+                    MessageBox.Show("Erro ao carregar imagem.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                }
         }
     }
 }

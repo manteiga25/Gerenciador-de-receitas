@@ -38,12 +38,17 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             flowLayoutPanel2 = new FlowLayoutPanel();
             flowLayoutPanel3 = new FlowLayoutPanel();
+            toolStrip1 = new ToolStrip();
+            toolStripDropDownButton1 = new ToolStripDropDownButton();
+            Import = new ToolStripMenuItem();
+            Export = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             flowLayoutPanel3.SuspendLayout();
+            toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -133,11 +138,45 @@
             flowLayoutPanel3.Size = new Size(110, 128);
             flowLayoutPanel3.TabIndex = 11;
             // 
+            // toolStrip1
+            // 
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1 });
+            toolStrip1.Location = new Point(0, 0);
+            toolStrip1.Name = "toolStrip1";
+            toolStrip1.Size = new Size(675, 25);
+            toolStrip1.TabIndex = 12;
+            toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripDropDownButton1
+            // 
+            toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { Import, Export });
+            toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
+            toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            toolStripDropDownButton1.Size = new Size(67, 22);
+            toolStripDropDownButton1.Text = "Ficheiros";
+            // 
+            // Import
+            // 
+            Import.Name = "Import";
+            Import.Size = new Size(180, 22);
+            Import.Text = "Importar Receitas";
+            Import.Click += Import_Click;
+            // 
+            // Export
+            // 
+            Export.Name = "Export";
+            Export.Size = new Size(180, 22);
+            Export.Text = "Exportar Receitas";
+            Export.Click += Export_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(675, 301);
+            Controls.Add(toolStrip1);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(flowLayoutPanel3);
             Controls.Add(flowLayoutPanel2);
@@ -153,7 +192,10 @@
             flowLayoutPanel2.PerformLayout();
             flowLayoutPanel3.ResumeLayout(false);
             flowLayoutPanel3.PerformLayout();
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -167,5 +209,10 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private FlowLayoutPanel flowLayoutPanel2;
         private FlowLayoutPanel flowLayoutPanel3;
+        private ToolStrip toolStrip1;
+        private ToolStripDropDownButton toolStripDropDownButton1;
+        private ToolStripTextBox toolStripTextBox1;
+        private ToolStripMenuItem Import;
+        private ToolStripMenuItem Export;
     }
 }
