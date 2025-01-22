@@ -17,7 +17,9 @@ namespace WinFormsApp1
 
         private List<Receitas> ReceitasList = null;
 
-        List<Receitas> receitaSearch = null;
+        private List<Receitas> receitaSearch = null;
+
+        private Image imagemPadrao = null;
 
         private bool search = false;
 
@@ -42,7 +44,7 @@ namespace WinFormsApp1
 
         private void Form2_Load(object sender, EventArgs e)
         {
-
+            imagemPadrao = Imagem.Image;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -96,7 +98,9 @@ namespace WinFormsApp1
                 cat.Text = receita.categoria;
                 dif.Text = receita.dificuldadte;
                 PessoasWid.Text = receita.numeroPessoas.ToString();
+                PrecoWid.Text = receita.preco.ToString();
                 Imagem.Image = receita.getBitmap();
+                PrecoWid.Text = receita.preco.ToString() + "€";
                 for (byte ingrediente = 0; ingrediente < receita.ingredientes.Count; ingrediente++)
                 {
                     IngredientesList.Rows.Add(receita.ingredientes[ingrediente], receita.quantidade[ingrediente].ToString(), receita.medida[ingrediente]);
@@ -109,6 +113,8 @@ namespace WinFormsApp1
             PessoasWid.Text = "";
             dif.Text = "";
             cat.Text = "";
+            PrecoWid.Text = "";
+            Imagem.Image = imagemPadrao;
             IngredientesList.Rows.Clear();
         }
 
@@ -117,6 +123,7 @@ namespace WinFormsApp1
             search = false;
             CampoWid.Text = "";
             ValorWid.Text = "";
+            PrecoWid.Text = "";
             ReceitasView.Items.Clear();
             foreach (Receitas receita in ReceitasList)
             {

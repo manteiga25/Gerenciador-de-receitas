@@ -57,6 +57,9 @@
             fileSystemWatcher1 = new FileSystemWatcher();
             Imagem = new PictureBox();
             groupBox1 = new GroupBox();
+            label11 = new Label();
+            PrecoBox = new MaskedTextBox();
+            label10 = new Label();
             ImagemBotao = new Button();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)IngredientesList).BeginInit();
@@ -204,7 +207,7 @@
             IngredientesList.AllowUserToAddRows = false;
             IngredientesList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             IngredientesList.Columns.AddRange(new DataGridViewColumn[] { Ingrediente, Quantidade, Medida });
-            IngredientesList.Location = new Point(10, 296);
+            IngredientesList.Location = new Point(11, 277);
             IngredientesList.Margin = new Padding(2);
             IngredientesList.MultiSelect = false;
             IngredientesList.Name = "IngredientesList";
@@ -304,11 +307,11 @@
             // 
             // ReceitasView
             // 
-            ReceitasView.Location = new Point(614, 50);
+            ReceitasView.Location = new Point(614, 45);
             ReceitasView.Margin = new Padding(2);
             ReceitasView.MultiSelect = false;
             ReceitasView.Name = "ReceitasView";
-            ReceitasView.Size = new Size(262, 454);
+            ReceitasView.Size = new Size(262, 445);
             ReceitasView.TabIndex = 22;
             ReceitasView.UseCompatibleStateImageBehavior = false;
             ReceitasView.View = View.List;
@@ -340,6 +343,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label11);
+            groupBox1.Controls.Add(PrecoBox);
+            groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(ImagemBotao);
             groupBox1.Controls.Add(Imagem);
             groupBox1.Controls.Add(label8);
@@ -347,10 +353,36 @@
             groupBox1.Controls.Add(IngredientesList);
             groupBox1.Location = new Point(12, 28);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(568, 476);
+            groupBox1.Size = new Size(568, 462);
             groupBox1.TabIndex = 25;
             groupBox1.TabStop = false;
             groupBox1.Text = "Receita";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(83, 425);
+            label11.Name = "label11";
+            label11.Size = new Size(13, 15);
+            label11.TabIndex = 28;
+            label11.Text = "€";
+            // 
+            // PrecoBox
+            // 
+            PrecoBox.Location = new Point(54, 420);
+            PrecoBox.Mask = "00.00";
+            PrecoBox.Name = "PrecoBox";
+            PrecoBox.Size = new Size(33, 23);
+            PrecoBox.TabIndex = 27;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(19, 424);
+            label10.Name = "label10";
+            label10.Size = new Size(37, 15);
+            label10.TabIndex = 26;
+            label10.Text = "Preço";
             // 
             // ImagemBotao
             // 
@@ -367,7 +399,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(911, 515);
+            ClientSize = new Size(911, 506);
             Controls.Add(label9);
             Controls.Add(ReceitasView);
             Controls.Add(CategoriaBox);
@@ -430,5 +462,8 @@
         private GroupBox groupBox1;
         private PictureBox Imagem;
         private Button ImagemBotao;
+        private Label label10;
+        private Label label11;
+        private MaskedTextBox PrecoBox;
     }
 }

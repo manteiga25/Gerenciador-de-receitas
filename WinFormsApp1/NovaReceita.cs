@@ -79,6 +79,7 @@ namespace WinFormsApp1
             DificuldadeBox.SelectedIndex = -1;
             CategoriaBox.SelectedIndex = -1;
             PessoasSpinner.Value = 1;
+            PrecoBox.Text = "";
             IngredientesMatriz.Rows.Clear();
             Duracao.Value = DateTimePicker.MinimumDateTime;
             Imagem.Image = imagemPadrao;
@@ -92,6 +93,7 @@ namespace WinFormsApp1
             string categoria = CategoriaBox.Text;
             byte numeroPessoas = (byte)PessoasSpinner.Value;
             string preparacao = Duracao.Value.ToString("HH:mm:ss");
+            string preco = PrecoBox.Text;
             byte numeroIngredientes = (byte)IngredientesMatriz.Rows.Count;
 
             string[] ingredientesNome = new string[numeroIngredientes];
@@ -109,7 +111,7 @@ namespace WinFormsApp1
             try
             {
 
-                if (nome != "" && dificuldade != "" && descricao != "" && categoria != "" && numeroPessoas != 0 && !preparacao.Equals("00:00:00") && numeroIngredientes != 0 && !Imagem.Image.Equals(imagemPadrao))
+                if (nome != "" && dificuldade != "" && descricao != "" && categoria != "" && numeroPessoas != 0 && !preparacao.Equals("00:00:00") && numeroIngredientes != 0 && !Imagem.Image.Equals(imagemPadrao) && preco != "")
                 {
 
                     Receitas receita = new Receitas();
@@ -119,6 +121,7 @@ namespace WinFormsApp1
                     receita.dificuldadte = dificuldade;
                     receita.numeroPessoas = numeroPessoas;
                     receita.preparacao = preparacao;
+                    receita.preco = float.Parse(preco);
                     receita.BitmapToBase64(new Bitmap(Imagem.Image));
                     receita.ingredientes = ingredientesNome.ToList<string>();
                     receita.quantidade = ingredientesQuantidade.ToList<byte>();

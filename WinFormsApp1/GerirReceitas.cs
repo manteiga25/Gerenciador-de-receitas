@@ -22,6 +22,9 @@ namespace WinFormsApp1
 
         private int ReceitaAtual;
         private string nomeAntigo;
+
+        private Image imagemPadrao = null;
+
         public GerirReceitas(List<Receitas> ReceitasList)
         {
             this.ReceitasList = ReceitasList;
@@ -37,13 +40,14 @@ namespace WinFormsApp1
                 {
                     ReceitasView.Items.Add(receit.nome);
                 }
+                imagemPadrao = Imagem.Image;
                 this.Show();
             }
         }
 
         private bool CheckItems(Receitas receita)
         {
-            if (receita.nome != "" && receita.dificuldadte != "" && receita.descricao != "" && receita.categoria != "" && receita.numeroPessoas != 0 && !receita.preparacao.Equals("00:00:00") && receita.ingredientes.Count != 0)
+            if (receita.nome != "" && receita.dificuldadte != "" && receita.descricao != "" && receita.categoria != "" && receita.numeroPessoas != 0 && !receita.preparacao.Equals("00:00:00") && receita.ingredientes.Count != 0 && PrecoBox.Text != "")
             {
                 return true;
             }
@@ -78,6 +82,7 @@ namespace WinFormsApp1
             DificuldadeBox.Text = receita.dificuldadte;
             CategoriaBox.Text = receita.categoria;
             PreparacaoText.Text = receita.descricao;
+            PrecoBox.Text = receita.preco.ToString();
             Duracao.Value = DateTime.Parse(receita.preparacao);
             Imagem.Image = receita.getImage();
 
@@ -111,6 +116,7 @@ namespace WinFormsApp1
             receita.categoria = CategoriaBox.Text;
             receita.descricao = PreparacaoText.Text;
             receita.preparacao = Duracao.Value.ToString("HH:mm:ss");
+            receita.preco = float.Parse(PrecoBox.Text);
             receita.BitmapToBase64(new Bitmap(Imagem.Image));
 
             List<string> ingredientesNome = new List<string>();
@@ -162,6 +168,7 @@ namespace WinFormsApp1
             CategoriaBox.Enabled = state;
             PreparacaoText.Enabled = state;
             Duracao.Enabled = state;
+            PrecoBox.Enabled = state;
             ImagemBotao.Enabled = state;
         }
 
@@ -172,7 +179,9 @@ namespace WinFormsApp1
             DificuldadeBox.SelectedIndex = -1;
             CategoriaBox.SelectedIndex = -1;
             PreparacaoText.Text = "";
-            Duracao.Value = DateTime.MinValue;
+            Duracao.Value = DateTimePicker.MinimumDateTime;
+            PrecoBox.Text = "";
+            Imagem.Image = imagemPadrao;
             IngredientesList.Rows.Clear();
         }
 

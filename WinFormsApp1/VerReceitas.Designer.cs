@@ -52,6 +52,8 @@
             Quantidade = new DataGridViewTextBoxColumn();
             Medida = new DataGridViewTextBoxColumn();
             Imagem = new PictureBox();
+            label9 = new Label();
+            PrecoWid = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)IngredientesList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Imagem).BeginInit();
@@ -273,11 +275,30 @@
             Imagem.TabIndex = 17;
             Imagem.TabStop = false;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(363, 154);
+            label9.Name = "label9";
+            label9.Size = new Size(37, 15);
+            label9.TabIndex = 18;
+            label9.Text = "Preço";
+            // 
+            // PrecoWid
+            // 
+            PrecoWid.BorderStyle = BorderStyle.FixedSingle;
+            PrecoWid.Location = new Point(406, 153);
+            PrecoWid.Name = "PrecoWid";
+            PrecoWid.Size = new Size(71, 20);
+            PrecoWid.TabIndex = 19;
+            // 
             // VerReceitas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(869, 501);
+            Controls.Add(PrecoWid);
+            Controls.Add(label9);
             Controls.Add(Imagem);
             Controls.Add(IngredientesList);
             Controls.Add(Prep);
@@ -328,5 +349,7 @@
         private DataGridViewTextBoxColumn Quantidade;
         private DataGridViewTextBoxColumn Medida;
         private PictureBox Imagem;
+        private Label label9;
+        private Label PrecoWid;
     }
 }

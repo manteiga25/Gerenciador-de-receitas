@@ -9,13 +9,12 @@ namespace WinFormsApp1
 {
     public struct Receitas
     {
-        public string nome, categoria, descricao, dificuldadte, preparacao;
+        public string nome, categoria, descricao, dificuldadte, preparacao, imagem;
         public List<string> ingredientes;
         public List<byte> quantidade;
         public List<string> medida;
         public byte numeroPessoas;
         public float preco;
-        public string imagem;
 
         public Bitmap getImage()
         {

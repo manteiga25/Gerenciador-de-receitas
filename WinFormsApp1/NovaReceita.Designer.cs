@@ -58,6 +58,9 @@
             Duracao = new DateTimePicker();
             Imagem = new PictureBox();
             button3 = new Button();
+            label11 = new Label();
+            PrecoBox = new MaskedTextBox();
+            label12 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)quantidadeSpinner).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IngredientesMatriz).BeginInit();
@@ -147,7 +150,7 @@
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(label9);
             groupBox1.Controls.Add(label2);
-            groupBox1.Location = new Point(25, 299);
+            groupBox1.Location = new Point(25, 322);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(560, 278);
             groupBox1.TabIndex = 8;
@@ -253,7 +256,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(504, 583);
+            button1.Location = new Point(504, 606);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 9;
@@ -263,7 +266,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(423, 583);
+            button2.Location = new Point(423, 606);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 10;
@@ -348,11 +351,40 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(39, 301);
+            label11.Name = "label11";
+            label11.Size = new Size(37, 15);
+            label11.TabIndex = 19;
+            label11.Text = "Preço";
+            // 
+            // PrecoBox
+            // 
+            PrecoBox.Location = new Point(76, 297);
+            PrecoBox.Mask = "00.00";
+            PrecoBox.Name = "PrecoBox";
+            PrecoBox.Size = new Size(34, 23);
+            PrecoBox.TabIndex = 20;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(106, 302);
+            label12.Name = "label12";
+            label12.Size = new Size(13, 15);
+            label12.TabIndex = 21;
+            label12.Text = "€";
+            // 
             // NovaReceita
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(634, 655);
+            Controls.Add(label12);
+            Controls.Add(PrecoBox);
+            Controls.Add(label11);
             Controls.Add(button3);
             Controls.Add(Imagem);
             Controls.Add(Duracao);
@@ -415,5 +447,8 @@
         private DataGridViewTextBoxColumn Medida;
         private PictureBox Imagem;
         private Button button3;
+        private Label label11;
+        private MaskedTextBox PrecoBox;
+        private Label label12;
     }
 }

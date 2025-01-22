@@ -26,7 +26,9 @@ namespace WinFormsApp1
                 receitas.dificuldadte = no["Dificuldade"].InnerText;
                 receitas.descricao = no["Descricao"].InnerText;
                 receitas.preparacao = no["Preparacao"].InnerText;
+                receitas.preco = float.Parse(no["Preco"].InnerText);
                 receitas.numeroPessoas = byte.Parse(no["Pessoas"].InnerText);
+                receitas.preco = float.Parse(no["Preco"].InnerText);
                 receitas.imagem = no["Imagem"].InnerText;
 
                 XmlNodeList IngredientesNode = no.SelectNodes("Ingredientes/Ingrediente");
@@ -68,7 +70,9 @@ namespace WinFormsApp1
                     receita.dificuldadte = receitaE.SelectSingleNode("Dificuldade").InnerText;
                     receita.descricao = receitaE.SelectSingleNode("Descricao").InnerText;
                     receita.preparacao = receitaE.SelectSingleNode("Preparacao").InnerText;
+                    receita.preco = float.Parse(receitaE.SelectSingleNode("Preco").InnerText);
                     receita.numeroPessoas = Byte.Parse(receitaE.SelectSingleNode("Pessoas").InnerText);
+                    receita.preco = float.Parse(receitaE.SelectSingleNode("Preco").InnerText);
                     receita.imagem = receitaE.SelectSingleNode("Imagem").InnerText;
 
                     XmlNodeList IngredientesNode = receitaE.SelectNodes("Ingredientes/Ingrediente");
@@ -105,6 +109,8 @@ namespace WinFormsApp1
                 descricaoAttr.InnerText = receita.descricao;
                 XmlElement preparacaoAttr = xmlDoc.CreateElement("Preparacao");
                 preparacaoAttr.InnerText = receita.preparacao;
+                XmlElement precoAttr = xmlDoc.CreateElement("Preco");
+                precoAttr.InnerText = receita.preco.ToString();
                 XmlElement pessoasAttr = xmlDoc.CreateElement("Pessoas");
                 pessoasAttr.InnerText = receita.numeroPessoas.ToString();
                 XmlElement imagemAttr = xmlDoc.CreateElement("Imagem");
@@ -135,6 +141,7 @@ namespace WinFormsApp1
                 child.AppendChild(dificuldadeAttr);
                 child.AppendChild(descricaoAttr);
                 child.AppendChild(preparacaoAttr);
+                child.AppendChild(precoAttr);
                 child.AppendChild(pessoasAttr);
                 child.AppendChild(imagemAttr);
                 child.AppendChild(IngredientesRoot);
@@ -163,6 +170,8 @@ namespace WinFormsApp1
                 descricaoAttr.InnerText = receita.descricao;
                 XmlElement preparacaoAttr = xmlDoc.CreateElement("Preparacao");
                 preparacaoAttr.InnerText = receita.preparacao;
+                XmlElement precoAttr = xmlDoc.CreateElement("Preco");
+                precoAttr.InnerText = receita.preco.ToString();
                 XmlElement pessoasAttr = xmlDoc.CreateElement("Pessoas");
                 pessoasAttr.InnerText = receita.numeroPessoas.ToString();
                 XmlElement imagemAttr = xmlDoc.CreateElement("Imagem");
@@ -193,6 +202,7 @@ namespace WinFormsApp1
                 child.AppendChild(dificuldadeAttr);
                 child.AppendChild(descricaoAttr);
                 child.AppendChild(preparacaoAttr);
+                child.AppendChild(precoAttr);
                 child.AppendChild(pessoasAttr);
                 child.AppendChild(imagemAttr);
                 child.AppendChild(IngredientesRoot);
@@ -222,6 +232,7 @@ namespace WinFormsApp1
                     receitaE.SelectSingleNode("Dificuldade").InnerText = receita.dificuldadte;
                     receitaE.SelectSingleNode("Descricao").InnerText = receita.descricao;
                     receitaE.SelectSingleNode("Preparacao").InnerText = receita.preparacao;
+                    receitaE.SelectSingleNode("Preco").InnerText = receita.preco.ToString();
                     receitaE.SelectSingleNode("Pessoas").InnerText = receita.numeroPessoas.ToString();
                     receitaE.SelectSingleNode("Imagem").InnerText = receita.imagem;
 
